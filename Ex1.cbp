@@ -31,7 +31,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Makefile" />
 		<Unit filename="NumClass.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -51,6 +50,7 @@
 			<Option compilerVar="CC" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="makefile" />
 		<Unit filename="test.c">
 			<Option compilerVar="CC" />
 			<Option target="&lt;{~None~}&gt;" />

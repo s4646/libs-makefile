@@ -6,7 +6,7 @@ FLAGS_OBJ = -c -fpic -Wall
 FLAGS_SO = -Wall -o
 FLAGS_MAIN = -Wall main.o -L. -l
 RM_FLAGS = *a *o *so
-PROGS = mains maindloop maindrec
+PROGS = mains maindloop maindrec loops recursives loopd recursived
 .PHONY = all clean loops recursives loopd recursived
 
 

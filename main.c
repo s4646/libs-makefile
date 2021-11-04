@@ -60,7 +60,7 @@ int main() {
                 printf(" %d", i);
         }
     }
-    printf(\"n");
+    printf("\n");
 }
 
 

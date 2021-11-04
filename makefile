@@ -3,18 +3,15 @@ loopOBJ = advancedClassificationLoop.o
 recOBJ = advancedClassificationRecursion.o
 CC = gcc
 FLAGS_OBJ = -c -fpic -Wall
-FLAGS_SO = -Wall -o
-FLAGS_MAIN = -Wall main.o -L. -l
+FLAGS_SO = -Wall -shared -o
+FLAGS_MAIN = -Wall main.o
 RM_FLAGS = *a *o *so
-PROGS = mains maindloop maindrec loops recursives loopd recursived
-.PHONY = all clean loops recursives loopd recursived
+PROGS = mains maindloop maindrec
+.PHONY = all loops recursives loopd recursived
 
+###
 
 all: $(PROGS)
-
-clean:
-	rm $(RM_FLAGS) $(PROGS)
-
 
 basicClassification.o: basicClassification.c
 	$(CC) $(FLAGS_OBJ) basicClassification.c
@@ -28,37 +25,42 @@ advancedClassificationRecursion.o: advancedClassificationRecursion.c
 main.o: main.c NumClass.h
 	$(CC) $(FLAGS_OBJ) main.c
 
+###
 
-#loops: libclassloops.a
+loops: libclassloops.a
 
-loops: $(basicOBJ) $(loopOBJ)
+libclassloops.a: $(basicOBJ) $(loopOBJ)
 	ar -rcs libclassloops.a $(basicOBJ) $(loopOBJ)
 
-#recursives‬‬: libclassrec.a
+recursives‬‬: libclassrec.a
 
-recursives: $(basicOBJ) $(recOBJ)
+libclassrec.a: $(basicOBJ) $(recOBJ)
 	ar -rcs libclassrec.a $(basicOBJ) $(recOBJ)
 
+###
 
+loopd‬‬: libclassloops.so
 
-#loopd‬‬: libclassloops.so
+libclassloops.so: $(basicOBJ) $(loopOBJ)
+	$(CC) $(FLAGS_SO) libclassloops.so $(basicOBJ) $(loopOBJ)
 
-loopd: $(basicOBJ) $(loopOBJ)
-	$(CC) -shared $(basicOBJ) $(loopOBJ) $(FLAGS_SO) libclassloops.so
+recursived‬‬: libclassrec.so
 
-#recursived‬‬: libclassrec.so
+libclassrec.so: $(basicOBJ) $(recOBJ)
+	$(CC) $(FLAGS_SO) libclassrec.so $(basicOBJ) $(recOBJ) 
 
-recursived: $(recOBJ) $(basicOBJ)
-	$(CC) -shared $(basicOBJ) $(recOBJ) $(FLAGS_SO) libclassrec.so
+###
 
+mains: main.o libclassrec.a
+	$(CC) $(FLAGS_MAIN) libclassrec.a -o mains
 
-mains: main.o recursives
-	$(CC) $(FLAGS_MAIN)classrec -o mains
+maindloop: main.o libclassloops.so
+	$(CC) $(FLAGS_MAIN) -o maindloop ./libclassloops.so
 
-maindloop: main.o loopd
-	$(CC) $(FLAGS_MAIN)classloops -o maindloop
+maindrec: main.o libclassrec.so
+	$(CC) $(FLAGS_MAIN) -o maindrec ./libclassrec.so
+	
+###
 
-maindrec: main.o recursived
-	$(CC) $(FLAGS_MAIN)classrec -o maindrec
-
-
+clean:
+	rm -f $(PROGS) $(RM_FLAGS)

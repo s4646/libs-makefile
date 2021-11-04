@@ -5,7 +5,6 @@ CC = gcc
 FLAGS_OBJ = -c -fpic -Wall
 FLAGS_SO = -Wall -o
 FLAGS_MAIN = -Wall main.o -L. -l
-FLAGS_MAIN = -Wall main.o -L. -l
 RM_FLAGS = *a *o *so
 PROGS = mains maindloop maindrec
 .PHONY = all clean
